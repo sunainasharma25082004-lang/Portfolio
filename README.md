@@ -95,27 +95,90 @@ Because of `render.yaml` + `postinstall` + correct build script, deploying is no
 
 See the well-commented [.env.example](.env.example) file.
 
-### Required variables:
+### Required variables (Render pe):
 
-| Variable          | Required     | Description |
-|-------------------|--------------|-----------|
-| `DATABASE_URL`    | Yes          | PostgreSQL connection (auto-provided by Render when using `render.yaml`) |
-| `OWNER_EMAIL`     | Yes          | Email where contact form & new reviews are sent |
-| `ADMIN_TOKEN`     | Yes          | Secret token for admin access (`/admin?token=...`) |
-| `RESEND_API_KEY`  | Recommended  | For sending email notifications (fallback to console if missing) |
+| Variable            | Required     | Kya hai? |
+|---------------------|--------------|----------|
+| `DATABASE_URL`      | Yes          | Postgres DB ka connection string (Render auto deta hai agar DB linked ho) |
+| `OWNER_EMAIL`       | Yes          | Contact form aur reviews kahan bhejni hain (tumhara email) |
+| `ADMIN_TOKEN`       | Yes          | Admin panel access ke liye secret token (`/admin?token=...`) |
+| `RESEND_API_KEY`    | Recommended  | Email bhejne ke liye (Resend.com se lo, warna console mein log hoga) |
 
-**How to generate a strong ADMIN_TOKEN:**
-- Windows (PowerShell): `[Convert]::ToBase64String((1..32 | ForEach-Object { Get-Random -Maximum 256 }))`
-- Or use any password generator (32+ characters recommended)
+**ADMIN_TOKEN kaise banao (Windows):**
+PowerShell mein ye command chalaao:
+```powershell
+[Convert]::ToBase64String((1..32 | ForEach-Object { Get-Random -Maximum 256 }))
+```
+
+Ya koi bhi strong random string (kam se kam 20-30 characters).
+
+---
+
+## Render Dashboard mein kya set karna hai (Manual Setup)
+
+Agar tum **render.yaml** use nahi kar rahe ho aur service manually bana rahe ho, to ye exact values daalo:
+
+### Build Command:
+```
+npm install && npm run build
+```
+
+### Start Command:
+```
+npm run start
+```
+
+### Pre-deploy Command (agar field dikhe to):
+```
+npx prisma migrate deploy
+```
+
+### Environment Variables (ye add karo):
+
+1. **DATABASE_URL**  
+   → Ye sabse important hai. Exact steps neeche diye hain. Service ka naam tumhare render.yaml ke hisaab se `sunaina-portfolio-db` hai.
+
+**Super simple steps to get DATABASE_URL (copy-paste ye steps):**
+
+1. Render dashboard kholo (https://dashboard.render.com).
+2. Left side mein services ki list dekho. Ek service "sunaina-portfolio-db" hona chahiye (ye Postgres database hai, icon alag hoga).
+3. Agar nahi dikh raha, to neeche "Blueprint apply" wala section dekho.
+4. "sunaina-portfolio-db" pe click karo.
+5. Upar tabs mein **Connect** naam ka tab dhundo aur click karo.
+6. "Internal Database URL" likha hoga – uske saamne copy button (📋) pe click karo.
+7. Poora string copy ho jayega (shuru hota hai postgres:// se).
+8. Ab wapas apne web service "sunaina-portfolio" pe jao.
+9. Left side **Environment** tab pe jao.
+10. "Add Environment Variable" pe click.
+11. Key mein likho: `DATABASE_URL`
+12. Value mein jo link copy kiya tha, pura paste kar do.
+13. Save kar do.
+
+Agar "sunaina-portfolio-db" service hi nahi ban raha, to pehle code push karo GitHub pe, phir Blueprints section mein jaake apna repo select karke "Apply" karo render.yaml ka. DB khud ban jayega.  
+   Agar DB linked hai to Render khud set kar deta hai.
+
+2. **RESEND_API_KEY**  
+   → Tumhara Resend API key (https://resend.com se lo)
+
+3. **OWNER_EMAIL**  
+   → `sunainasharma25082004@gmail.com`
+
+4. **ADMIN_TOKEN**  
+   → Upar wala strong token jo tune banaya
+
+5. **NODE_ENV** (optional lekin achha hai)  
+   → `production`
+
+**Sabse best tarika:** `render.yaml` file use karo (Blueprint). Usme sab auto ho jata hai.
 
 ---
 
 ## Useful Commands
 
 ```bash
-npm run build                 # Production build (runs prisma migrate deploy)
+npm run build                 # Production build (prisma generate + next build)
 npm run db:studio             # Browse your database
-npm run db:migrate:deploy     # Apply migrations (done automatically on Render build)
+npm run db:migrate:deploy     # Apply migrations manually if needed
 ```
 
 ---

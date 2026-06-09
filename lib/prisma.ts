@@ -9,6 +9,12 @@ const globalForPrisma = globalThis as unknown as {
 function createPrismaClient() {
   const connectionString = process.env.DATABASE_URL || ''
 
+  if (!connectionString) {
+    console.error('❌ DATABASE_URL is not set! Prisma will fail to connect.')
+  } else {
+    console.log('✅ Prisma client initialized with Postgres (via @prisma/adapter-pg)')
+  }
+
   const pool = new Pool({ connectionString })
   const adapter = new PrismaPg(pool)
 
