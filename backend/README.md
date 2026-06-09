@@ -1,4 +1,8 @@
-# Portfolio Backend (MERN)
+# Portfolio Backend (MERN) — DEPRECATED
+
+> ⚠️ This folder is kept for historical reference only.
+> All functionality has been moved into the main Next.js app (Prisma + Server Actions + API routes).
+> See root README for current production setup.
 
 Separate Express + MongoDB backend for the developer portfolio.
 

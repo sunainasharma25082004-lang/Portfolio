@@ -10,7 +10,7 @@ type MagneticButtonProps = {
   onClick?: () => void
   variant?: 'primary' | 'outline' | 'ghost'
   className?: string
-  download?: boolean
+  download?: boolean | string
   type?: 'button' | 'submit'
   disabled?: boolean
   'aria-label'?: string

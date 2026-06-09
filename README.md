@@ -1,134 +1,147 @@
-# Developer Portfolio (MERN Stack)
+# Developer Portfolio
 
-Full-stack developer portfolio built with **Next.js (Frontend)** + **Node.js + Express + MongoDB (Backend)**.
+Modern full-stack developer portfolio built with **Next.js 16 (App Router)** + **Prisma + PostgreSQL**.
 
-## Architecture
+> The old separate Express + Mongo backend has been consolidated into the Next.js app for much simpler deployment.
 
-- **Frontend**: Next.js 16 (App Router) + Tailwind + Framer Motion + TypeScript
-- **Backend**: Express.js + Mongoose + MongoDB (proper MERN backend)
-- Contact form + Client reviews system with admin approval flow
+## Architecture (Production Ready)
+
+- **Frontend + Backend**: Single Next.js app (App Router + Server Actions + API Routes)
+- **Database**: Prisma + PostgreSQL (perfect for Render)
+- Contact form + Client reviews (with admin approval)
+- Protected Admin Dashboard (`/admin?token=xxx`)
+- Email notifications via Resend (optional but recommended)
+- Honeypot anti-spam + basic logging
 
 ## Features
 
-- Beautiful responsive portfolio
-- Working Contact Form (saves to MongoDB + optional email via Resend)
-- Client Review / Testimonial system (users submit → admin approves → appears on site)
-- Protected Admin Dashboard (`/admin?token=xxx`)
-- Honeypot anti-spam protection
-- IP + User-Agent logging
+- Beautiful responsive portfolio (mobile-first)
+- Working Contact Form (saved to DB + email notification)
+- Client Review system (submit → pending → admin approve → live on site)
+- Admin panel for managing messages & reviews
+- Production-ready setup for **Render**
 
 ---
 
-## Quick Start (Development)
-
-### 1. Install all dependencies (root + backend)
+## Local Development
 
 ```bash
-# Root (Next.js)
 npm install
-
-# Backend (Express + Mongo)
-cd backend
-npm install
-cd ..
 ```
 
-### 2. Setup Environment Variables
-
-**Backend** (most important):
+### Environment
 
 ```bash
-cd backend
-cp .env.example .env
-# Edit .env with your MongoDB URI, ADMIN_TOKEN, RESEND_API_KEY etc.
+cp .env.example .env.local
 ```
 
-**Frontend** — create/edit `.env.local` in project root:
+Fill the important ones:
 
 ```env
-NEXT_PUBLIC_BACKEND_URL=http://localhost:5000
-# Optional: ADMIN_TOKEN=your_token   (only if you want to expose it to client)
+DATABASE_URL="postgresql://..."     # Use local Postgres or Neon/Supabase for local
+RESEND_API_KEY=...
+OWNER_EMAIL=your@email.com
+ADMIN_TOKEN=your-strong-random-token
 ```
 
-### 3. Run both servers
+### Run
 
 ```bash
-# Terminal 1 - Backend (Express + MongoDB)
-cd backend
-npm run dev
-
-# Terminal 2 - Frontend (Next.js)
 npm run dev
 ```
 
-Visit:
-- Portfolio → http://localhost:3000
-- Admin → http://localhost:3000/admin?token=YOUR_ADMIN_TOKEN
+Admin: `http://localhost:3000/admin?token=YOUR_ADMIN_TOKEN`
+
+> Note: After switching to Postgres, run `npm run db:migrate` (or `npx prisma migrate dev`) once.
 
 ---
 
-## Backend API (MERN)
+## Deploy to Render (Recommended - Very Easy)
 
-Backend runs on port **5000** by default.
+This project includes a `render.yaml` Blueprint so you can deploy in minutes.
 
-See full details in [backend/README.md](./backend/README.md)
+### Steps:
 
-Key endpoints:
+1. **Push your code** to GitHub (make sure `render.yaml`, `.env.example`, updated `package.json` are committed).
 
-| Method | Path                        | Auth     | Description                     |
-|--------|-----------------------------|----------|---------------------------------|
-| POST   | `/api/contact`              | Public   | Submit contact form             |
-| POST   | `/api/reviews`              | Public   | Submit review (PENDING)         |
-| GET    | `/api/reviews/approved`     | Public   | Get testimonials                |
-| GET    | `/api/admin/messages`       | Token    | All contact messages            |
-| GET    | `/api/admin/reviews`        | Token    | All reviews                     |
-| PUT    | `/api/admin/reviews/:id`    | Token    | Approve or Reject               |
-| DELETE | `/api/admin/reviews/:id`    | Token    | Delete review                   |
+2. Go to [Render Dashboard → Blueprints](https://dashboard.render.com/blueprints) and connect your GitHub repo.
+
+3. Render will detect `render.yaml` and create:
+   - A **Web Service** (your Next.js app)
+   - A **free PostgreSQL** database
+   - Automatically injects `DATABASE_URL`
+
+4. **After first deploy**, go to your web service → **Environment** and add these secrets:
+   - `RESEND_API_KEY`
+   - `OWNER_EMAIL`
+   - `ADMIN_TOKEN` (generate a strong one)
+
+5. Trigger a manual deploy (or push a commit). On build it will run:
+   - `prisma generate`
+   - `prisma migrate deploy`
+   - `next build`
+
+6. Your site will be live at `https://your-service.onrender.com`
+
+7. Access admin: `https://your-service.onrender.com/admin?token=YOUR_ADMIN_TOKEN`
+
+### One-command friendly
+
+Because of `render.yaml` + `postinstall` + correct build script, deploying is now very reliable.
 
 ---
 
-## Database (MongoDB)
+## Environment Variables (Production)
 
-- Use **MongoDB Atlas** (free tier recommended)
-- Put your connection string in `backend/.env` as `MONGO_URI`
+See the well-commented [.env.example](.env.example) file.
+
+### Required variables:
+
+| Variable          | Required     | Description |
+|-------------------|--------------|-----------|
+| `DATABASE_URL`    | Yes          | PostgreSQL connection (auto-provided by Render when using `render.yaml`) |
+| `OWNER_EMAIL`     | Yes          | Email where contact form & new reviews are sent |
+| `ADMIN_TOKEN`     | Yes          | Secret token for admin access (`/admin?token=...`) |
+| `RESEND_API_KEY`  | Recommended  | For sending email notifications (fallback to console if missing) |
+
+**How to generate a strong ADMIN_TOKEN:**
+- Windows (PowerShell): `[Convert]::ToBase64String((1..32 | ForEach-Object { Get-Random -Maximum 256 }))`
+- Or use any password generator (32+ characters recommended)
+
+---
+
+## Useful Commands
+
+```bash
+npm run build                 # Production build (runs prisma migrate deploy)
+npm run db:studio             # Browse your database
+npm run db:migrate:deploy     # Apply migrations (done automatically on Render build)
+```
 
 ---
 
 ## Admin Panel
 
-1. Set a strong `ADMIN_TOKEN` in `backend/.env`
-2. Go to `http://localhost:3000/admin?token=your_token`
-3. You can approve/reject/delete reviews from there
+1. Set a strong `ADMIN_TOKEN`
+2. Visit `https://your-site.onrender.com/admin?token=your_token`
+
+You can approve/reject/delete reviews and view all contact messages.
 
 ---
 
-## Deployment
+## Notes / Cleanup
 
-### Backend (Express)
-Recommended platforms:
-- **Render** (easiest)
-- Railway
-- Vercel (Node server)
-
-Remember to set all env vars + update `ALLOWED_ORIGIN`.
-
-### Frontend (Next.js)
-- Vercel (recommended)
-- Update `NEXT_PUBLIC_BACKEND_URL` to your deployed backend URL
+- The old `backend/` folder (Express + Mongoose + Mongo) is kept only for reference. Everything now runs inside the Next.js app using Prisma + PostgreSQL.
+- Old `dev.db` (SQLite) is no longer used.
+- All data (contacts + reviews) now lives in PostgreSQL.
 
 ---
 
 ## Tech Stack
 
-**Frontend**
-- Next.js 16 + TypeScript
-- Tailwind CSS + shadcn/ui style
-- Framer Motion
+**Next.js 16** • TypeScript • **Prisma** • **PostgreSQL** • Tailwind • Framer Motion • Resend • Render
 
-**Backend (MERN)**
-- Node.js + Express
-- MongoDB + Mongoose
-- Resend (emails)
+Ready for easy production deployment on Render! 🚀
 - CORS
 
 ---

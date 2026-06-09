@@ -90,7 +90,7 @@ export function Hero() {
             variants={fadeUp}
             className="mt-6 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 lg:justify-start"
           >
-            <MagneticButton href="/resume.pdf" download variant="primary">
+            <MagneticButton href="/resume.pdf" variant="primary">
               <FiDownload size={16} /> Download Resume
             </MagneticButton>
             <MagneticButton href="#projects" variant="outline">
@@ -139,10 +139,10 @@ export function Hero() {
             <div className="absolute -inset-2.5 sm:-inset-4 rounded-[2rem] bg-gradient-to-tr from-primary/40 to-secondary/40 blur-2xl" />
             <div className="relative overflow-hidden rounded-[2rem] border border-border glass">
               <Image
-                src="/avatar.png"
+                src="/image/sunaina-img.jpeg"
                 alt={`Portrait of ${personal.name}`}
-                width={520}
-                height={620}
+                width={800}
+                height={1000}
                 priority
                 className="h-auto w-full object-cover"
               />

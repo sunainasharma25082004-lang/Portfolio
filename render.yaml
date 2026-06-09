@@ -1,0 +1,36 @@
+# Render Blueprint - makes deploying this portfolio to Render extremely easy.
+# How to use:
+# 1. Push this repo to GitHub
+# 2. Go to https://dashboard.render.com/blueprints
+# 3. Connect your repo + "Apply" this render.yaml
+# It will automatically create:
+#   - A Web Service (your Next.js app)
+#   - A free PostgreSQL database
+#   - Wire up DATABASE_URL + other envs
+
+services:
+  - type: web
+    name: sunaina-portfolio
+    runtime: node
+    region: oregon   # change if you prefer frankfurt, etc.
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: RESEND_API_KEY
+        sync: false   # you will set this manually in dashboard (or add from env group)
+      - key: OWNER_EMAIL
+        sync: false
+      - key: ADMIN_TOKEN
+        sync: false
+      # DATABASE_URL will be auto-injected by the database below
+
+databases:
+  - name: sunaina-portfolio-db
+    plan: free
+    region: oregon
+    databaseName: portfolio
+    user: portfolio_user
+    # Render will automatically create DATABASE_URL and attach it to the web service
