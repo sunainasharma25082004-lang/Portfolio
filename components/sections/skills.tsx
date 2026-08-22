@@ -26,7 +26,7 @@ import { fadeUp, staggerContainer, viewportOnce } from '@/lib/motion'
 import { skillCategories } from '@/lib/data'
 
 const iconMap: Record<string, IconType> = {
-  'React.js & Next.js': SiNextdotjs,
+  'React.js Architecture': SiReact,
   'React Native & Expo': TbDeviceMobile,
   'JavaScript (ES6+) & TypeScript': SiTypescript,
   'HTML5 / CSS3 / Tailwind CSS': SiTailwindcss,

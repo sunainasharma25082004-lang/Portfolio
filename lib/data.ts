@@ -29,7 +29,7 @@ export const skillCategories: SkillCategory[] = [
   {
     title: 'Frontend & Mobile Web Engineering',
     skills: [
-      { name: 'React.js & Next.js', level: 96 },
+      { name: 'React.js Architecture', level: 96 },
       { name: 'React Native & Expo', level: 95 },
       { name: 'JavaScript (ES6+) & TypeScript', level: 94 },
       { name: 'HTML5 / CSS3 / Tailwind CSS', level: 96 },
