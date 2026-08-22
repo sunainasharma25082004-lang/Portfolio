@@ -5,27 +5,38 @@ import {
   FiCode,
   FiLayers,
   FiSmartphone,
-  FiLink,
-  FiTrendingUp,
-  FiTool,
+  FiDatabase,
+  FiZap,
+  FiCheckCircle,
 } from 'react-icons/fi'
-import type { IconType } from 'react-icons'
 import { SectionHeading } from '@/components/section-heading'
 import { fadeUp, staggerContainer, viewportOnce } from '@/lib/motion'
 import { services } from '@/lib/data'
 
-const icons: IconType[] = [
-  FiCode,
-  FiLayers,
+const serviceIcons = [
   FiSmartphone,
-  FiLink,
-  FiTrendingUp,
-  FiTool,
+  FiCode,
+  FiDatabase,
+  FiLayers,
+  FiZap,
+  FiCheckCircle,
+]
+
+const serviceAccents = [
+  'from-emerald-400 to-teal-500',
+  'from-indigo-400 to-primary',
+  'from-cyan-400 to-blue-500',
+  'from-purple-400 to-accent',
+  'from-amber-400 to-orange-500',
+  'from-rose-400 to-pink-500',
 ]
 
 export function Services() {
   return (
     <section id="services" className="relative py-16 sm:py-24 lg:py-32">
+      {/* Background Ambient Glow */}
+      <div className="pointer-events-none absolute right-10 top-1/3 -z-10 h-96 w-96 rounded-full bg-emerald-500/10 blur-[140px]" />
+
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <motion.div
           variants={staggerContainer}
@@ -34,31 +45,47 @@ export function Services() {
           viewport={viewportOnce}
         >
           <SectionHeading
-            eyebrow="Services"
-            title="What I can do for you"
-            description="From concept to deployment, I offer the full spectrum of modern web development services."
+            eyebrow="Specialized Services &amp; Capabilities"
+            title="What I Offer &amp; Engineer for Clients"
+            description="From initial UI/UX wireframes to full-stack web platforms, REST API engines, and Google Play Store application launches."
           />
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((service, i) => {
-              const Icon = icons[i % icons.length]
+              const Icon = serviceIcons[i % serviceIcons.length]
+              const gradient = serviceAccents[i % serviceAccents.length]
+
               return (
                 <motion.div
                   key={service.title}
                   variants={fadeUp}
                   whileHover={{ y: -8 }}
-                  className="group relative overflow-hidden rounded-3xl border border-border bg-card p-5 sm:p-7"
+                  className="group relative overflow-hidden rounded-3xl border border-indigo-500/25 glass-card p-6 sm:p-8 shadow-xl hover:border-emerald-400/50 transition-all duration-300 flex flex-col justify-between"
                 >
-                  <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-primary/10 blur-2xl transition-all duration-500 group-hover:bg-primary/20" />
-                  <div className="relative mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-secondary text-primary-foreground">
-                    <Icon size={24} />
+                  <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-indigo-500/10 blur-2xl transition-all duration-500 group-hover:bg-emerald-500/20" />
+
+                  <div>
+                    <div className={`mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${gradient} text-slate-950 font-bold shadow-lg shadow-indigo-500/20`}>
+                      <Icon size={26} />
+                    </div>
+
+                    <h3 className="font-heading text-xl font-black text-white group-hover:text-emerald-400 transition-colors">
+                      {service.title}
+                    </h3>
+
+                    <p className="mt-3 text-xs sm:text-sm leading-relaxed text-slate-300">
+                      {service.description}
+                    </p>
                   </div>
-                  <h3 className="font-heading text-lg font-bold text-foreground">
-                    {service.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {service.description}
-                  </p>
+
+                  <div className="mt-6 border-t border-slate-800/80 pt-4 flex items-center justify-between text-xs font-bold text-slate-400">
+                    <span className="text-emerald-400 flex items-center gap-1.5">
+                      <FiCheckCircle size={14} /> Production Ready
+                    </span>
+                    <span className="group-hover:translate-x-1 transition-transform text-white">
+                      Learn More →
+                    </span>
+                  </div>
                 </motion.div>
               )
             })}

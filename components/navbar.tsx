@@ -2,16 +2,19 @@
 
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { FiGithub, FiLinkedin, FiTwitter } from 'react-icons/fi'
+import { FiGithub, FiLinkedin, FiTwitter, FiSearch, FiMessageSquare } from 'react-icons/fi'
 import { navLinks, personal } from '@/lib/data'
 import { cn } from '@/lib/utils'
 
-export function Navbar() {
+interface NavbarProps {
+  onOpenCommandPalette?: () => void
+}
+
+export function Navbar({ onOpenCommandPalette }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState('#home')
 
-  // Scroll lock when mobile menu is open
   useEffect(() => {
     if (open) {
       const originalOverflow = document.body.style.overflow
@@ -23,7 +26,7 @@ export function Navbar() {
   }, [open])
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
+    const onScroll = () => setScrolled(window.scrollY > 20)
     onScroll()
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
@@ -51,24 +54,27 @@ export function Navbar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={cn(
-        'fixed inset-x-0 top-0 z-[60] transition-all duration-300',
-        scrolled ? 'py-3' : 'py-5',
+        'fixed inset-x-0 top-0 z-[60] transition-all duration-300 px-3 sm:px-6',
+        scrolled ? 'py-3.5' : 'py-5',
       )}
     >
       <nav
         className={cn(
-          'mx-auto flex w-full max-w-6xl items-center justify-between rounded-full border px-4 py-3 transition-all duration-300 sm:px-6',
+          'mx-auto flex w-full max-w-6xl items-center justify-between rounded-full border px-4 py-2.5 transition-all duration-300 sm:px-6',
           (scrolled || open)
-            ? 'glass border-border shadow-lg shadow-black/20'
-            : 'border-transparent',
+            ? 'glass border-indigo-500/35 shadow-2xl shadow-indigo-500/10'
+            : 'border-indigo-500/20 bg-slate-950/40 backdrop-blur-md',
         )}
       >
         <a
           href="#home"
-          className="font-heading text-base font-bold tracking-tight text-foreground sm:text-lg"
+          className="font-heading text-base font-black tracking-tight text-white sm:text-xl flex items-center gap-1.5"
         >
+          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-tr from-indigo-600 to-emerald-400 text-xs font-black text-slate-950 shadow-md">
+            S
+          </span>
           {personal.name.split(' ')[0]}
-          <span className="text-primary">.dev</span>
+          <span className="text-emerald-400">.dev</span>
         </a>
 
         <ul className="hidden items-center gap-1 md:flex">
@@ -77,16 +83,16 @@ export function Navbar() {
               <a
                 href={link.href}
                 className={cn(
-                  'relative rounded-full px-4 py-2 text-sm font-medium transition-colors',
+                  'relative rounded-full px-4 py-2 text-xs sm:text-sm font-extrabold transition-colors',
                   active === link.href
-                    ? 'text-foreground'
-                    : 'text-muted-foreground hover:text-foreground',
+                    ? 'text-white'
+                    : 'text-slate-400 hover:text-white',
                 )}
               >
                 {active === link.href && (
                   <motion.span
                     layoutId="nav-pill"
-                    className="absolute inset-0 -z-10 rounded-full bg-primary/15"
+                    className="absolute inset-0 -z-10 rounded-full bg-gradient-to-r from-indigo-500/25 via-emerald-500/20 to-indigo-500/25 border border-indigo-500/40"
                     transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                   />
                 )}
@@ -96,58 +102,66 @@ export function Navbar() {
           ))}
         </ul>
 
-        <a
-          href="#contact"
-          className="hidden rounded-full bg-primary px-5 py-2 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-colors hover:bg-primary/90 md:inline-flex"
-        >
-          Let&apos;s Talk
-        </a>
-
-        {/* Mobile hamburger - custom animated (clear X when open) */}
-        <button
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          onClick={() => setOpen((v) => !v)}
-          className={cn(
-            "group relative flex h-10 w-10 items-center justify-center rounded-full border transition-all active:scale-[0.94] md:hidden",
-            open
-              ? "border-primary/40 bg-primary/10 text-primary backdrop-blur-md"
-              : "border-border bg-card/80 text-foreground backdrop-blur-md"
+        <div className="flex items-center gap-2.5">
+          {onOpenCommandPalette && (
+            <button
+              onClick={onOpenCommandPalette}
+              title="Open Command Palette (Ctrl+K)"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-indigo-500/30 bg-slate-900/90 text-slate-300 hover:text-emerald-400 hover:border-emerald-400/50 transition-all shadow-md active:scale-95"
+            >
+              <FiSearch size={16} />
+            </button>
           )}
-        >
-          <div className="relative h-[17px] w-5">
-            {/* Top line */}
-            <motion.span
-              animate={{
-                rotate: open ? 45 : 0,
-                y: open ? 5.5 : 0,
-                width: open ? "100%" : "100%",
-              }}
-              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute left-0 top-0 block h-[2px] w-5 rounded-full bg-current"
-            />
-            {/* Middle line */}
-            <motion.span
-              animate={{
-                opacity: open ? 0 : 1,
-                x: open ? 3 : 0,
-              }}
-              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute left-0 top-1/2 block h-[2px] w-5 -translate-y-1/2 rounded-full bg-current"
-            />
-            {/* Bottom line */}
-            <motion.span
-              animate={{
-                rotate: open ? -45 : 0,
-                y: open ? -5.5 : 0,
-              }}
-              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute left-0 bottom-0 block h-[2px] w-5 rounded-full bg-current"
-            />
-          </div>
-        </button>
+
+          <a
+            href="#contact"
+            className="hidden rounded-full bg-gradient-to-r from-indigo-600 via-primary to-emerald-500 px-5 py-2 text-xs font-black text-white shadow-lg shadow-indigo-500/25 transition-all hover:scale-105 active:scale-95 md:inline-flex items-center gap-1.5"
+          >
+            <FiMessageSquare size={14} /> Let&apos;s Talk
+          </a>
+
+          {/* Mobile hamburger */}
+          <button
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            onClick={() => setOpen((v) => !v)}
+            className={cn(
+              "group relative flex h-9 w-9 items-center justify-center rounded-full border transition-all active:scale-95 md:hidden",
+              open
+                ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-400 backdrop-blur-md"
+                : "border-indigo-500/30 bg-slate-900 text-white backdrop-blur-md"
+            )}
+          >
+            <div className="relative h-[17px] w-5">
+              <motion.span
+                animate={{
+                  rotate: open ? 45 : 0,
+                  y: open ? 5.5 : 0,
+                }}
+                transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute left-0 top-0 block h-[2px] w-5 rounded-full bg-current"
+              />
+              <motion.span
+                animate={{
+                  opacity: open ? 0 : 1,
+                  x: open ? 3 : 0,
+                }}
+                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute left-0 top-1/2 block h-[2px] w-5 -translate-y-1/2 rounded-full bg-current"
+              />
+              <motion.span
+                animate={{
+                  rotate: open ? -45 : 0,
+                  y: open ? -5.5 : 0,
+                }}
+                transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute left-0 bottom-0 block h-[2px] w-5 rounded-full bg-current"
+              />
+            </div>
+          </button>
+        </div>
       </nav>
 
-      {/* Premium Full-Screen Mobile Menu - tighter + more animated */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -155,10 +169,9 @@ export function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.18 }}
-            className="fixed inset-0 z-[55] bg-background/95 backdrop-blur-2xl md:hidden"
+            className="fixed inset-0 z-[55] bg-slate-950/95 backdrop-blur-2xl md:hidden"
             onClick={() => setOpen(false)}
           >
-            {/* Inner content */}
             <motion.div
               initial={{ opacity: 0, y: 24, scale: 0.985 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -167,34 +180,26 @@ export function Navbar() {
               className="flex h-full flex-col px-5 pb-8 pt-16"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Top bar inside menu with explicit close */}
-              <motion.div
-                initial={{ opacity: 0, y: -8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.08 }}
-                className="mb-3 flex items-center justify-between"
-              >
+              <div className="mb-4 flex items-center justify-between border-b border-slate-800 pb-3">
                 <a
                   href="#home"
                   onClick={() => setOpen(false)}
-                  className="font-heading text-lg font-semibold tracking-tight text-foreground"
+                  className="font-heading text-lg font-black text-white"
                 >
                   {personal.name.split(' ')[0]}
-                  <span className="text-primary">.dev</span>
+                  <span className="text-emerald-400">.dev</span>
                 </a>
 
-                {/* Explicit close button at top of menu - very clear */}
                 <button
                   onClick={() => setOpen(false)}
                   aria-label="Close menu"
-                  className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card/70 text-foreground backdrop-blur transition active:scale-95 hover:bg-card"
+                  className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-800 bg-slate-900 text-white backdrop-blur transition active:scale-95"
                 >
                   <span className="text-2xl leading-none -mt-0.5">×</span>
                 </button>
-              </motion.div>
+              </div>
 
-              {/* Nav Links - tighter + better stagger */}
-              <div className="flex flex-col">
+              <div className="flex flex-col space-y-1">
                 {navLinks.map((link, index) => {
                   const isActive = active === link.href
                   return (
@@ -211,26 +216,21 @@ export function Navbar() {
                         ease: [0.22, 1, 0.36, 1],
                       }}
                       className={cn(
-                        'group flex items-center justify-between rounded-2xl px-4 py-3 text-[21px] font-medium tracking-[-0.2px] transition-all active:bg-white/5',
+                        'group flex items-center justify-between rounded-2xl px-4 py-3 text-lg font-extrabold transition-all active:bg-white/5',
                         isActive
-                          ? 'text-foreground'
-                          : 'text-muted-foreground hover:text-foreground'
+                          ? 'text-emerald-400 bg-emerald-500/10 border border-emerald-500/30'
+                          : 'text-slate-300 hover:text-white'
                       )}
                     >
                       <span>{link.label}</span>
                       {isActive && (
-                        <motion.span
-                          layoutId="mobile-active-dot"
-                          className="h-1.5 w-1.5 rounded-full bg-primary"
-                          transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                        />
+                        <span className="h-2 w-2 rounded-full bg-emerald-400" />
                       )}
                     </motion.a>
                   )
                 })}
               </div>
 
-              {/* CTA Button - nicer entrance */}
               <motion.a
                 href="#contact"
                 onClick={() => setOpen(false)}
@@ -238,13 +238,12 @@ export function Navbar() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.32, delay: 0.26 }}
                 whileTap={{ scale: 0.985 }}
-                className="mt-6 inline-flex w-full items-center justify-center rounded-2xl bg-primary px-7 py-3.5 text-[15px] font-semibold text-primary-foreground shadow-lg shadow-primary/25 active:bg-primary/90"
+                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-indigo-600 to-emerald-500 px-7 py-3.5 text-base font-black text-white shadow-xl shadow-indigo-500/30"
               >
-                Let&apos;s Talk
+                <FiMessageSquare size={18} /> Let&apos;s Talk
               </motion.a>
 
-              {/* Socials - closer and more animated */}
-              <div className="mt-8 flex items-center justify-center gap-2.5">
+              <div className="mt-8 flex items-center justify-center gap-3">
                 {[
                   { icon: FiGithub, href: personal.github, label: 'GitHub' },
                   { icon: FiLinkedin, href: personal.linkedin, label: 'LinkedIn' },
@@ -260,17 +259,12 @@ export function Navbar() {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{ delay: 0.32 + i * 0.045, type: 'spring', stiffness: 280, damping: 18 }}
                     whileTap={{ scale: 0.9 }}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card/50 text-muted-foreground transition-all hover:border-primary hover:text-primary"
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-slate-800 bg-slate-900 text-slate-300 transition-all hover:border-emerald-400 hover:text-emerald-400"
                   >
                     <Icon size={18} />
                   </motion.a>
                 ))}
               </div>
-
-              {/* Small footer note */}
-              <p className="mt-6 text-center text-[10px] text-muted-foreground/60">
-                {personal.name} — Available for freelance
-              </p>
             </motion.div>
           </motion.div>
         )}

@@ -1,35 +1,50 @@
 import { Analytics } from '@vercel/analytics/next'
-import type { Metadata } from 'next'
-import { Inter, Sora } from 'next/font/google'
+import type { Metadata, Viewport } from 'next'
+import { Plus_Jakarta_Sans, Outfit, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 
-const inter = Inter({ variable: '--font-sans', subsets: ['latin'] })
-const sora = Sora({
-  variable: '--font-heading',
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: '--font-sans',
   subsets: ['latin'],
   weight: ['400', '500', '600', '700', '800'],
 })
 
+const outfit = Outfit({
+  variable: '--font-heading',
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800', '900'],
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: '--font-mono',
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+})
+
 export const metadata: Metadata = {
-  title: 'Sunaina Sharma — Frontend Web and App Developer',
+  title: 'Sunaina Sharma — Frontend & Full Stack Mobile Developer',
   description:
-    'Portfolio of Sunaina Sharma, a Frontend & MERN Stack Developer building fast, scalable, and user-focused web applications with React, Node.js, Express, and MongoDB.',
-  generator: 'v0.app',
+    'Portfolio of Sunaina Sharma, Frontend & Mobile App Engineer specializing in React.js, React Native, Node.js, Express, MongoDB, and Google Play Store publishing.',
   keywords: [
     'Frontend Developer',
     'React Developer',
-    'Web Developer Portfolio',
+    'React Native Mobile Developer',
+    'Play Store Apps',
+    'Sunaina Sharma Portfolio',
   ],
   openGraph: {
-    title: 'Sunaina Sharma — Frontend Web and App Developer',
+    title: 'Sunaina Sharma — Frontend & Full Stack Mobile Developer',
     description:
-      'I build fast, scalable, and user-focused web applications with modern technologies.',
+      'I build fast, scalable, and user-focused web and mobile applications with modern technologies.',
     type: 'website',
   },
 }
 
-export const viewport = {
-  themeColor: '#0F172A',
+export const viewport: Viewport = {
+  themeColor: '#0b0f19',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
 }
 
 export default function RootLayout({
@@ -40,9 +55,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${sora.variable} bg-background`}
+      className={`${plusJakarta.variable} ${outfit.variable} ${jetbrainsMono.variable} bg-background scroll-smooth`}
+      suppressHydrationWarning
     >
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased bg-background text-foreground overflow-x-hidden w-full max-w-full" suppressHydrationWarning>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

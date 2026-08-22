@@ -3,16 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "prisma generate && next build",
+    "dev": "next dev --webpack",
+    "build": "npx prisma generate && next build",
     "start": "npx prisma migrate deploy || echo '⚠️ Migration step had an issue (server will still start)' && next start",
     "lint": "eslint .",
-    "postinstall": "prisma generate",
-    "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev",
-    "db:migrate:deploy": "prisma migrate deploy",
-    "db:studio": "prisma studio",
-    "db:push": "prisma db push"
+    "postinstall": "npx prisma generate",
+    "db:generate": "npx prisma generate",
+    "db:migrate": "npx prisma migrate dev",
+    "db:migrate:deploy": "npx prisma migrate deploy",
+    "db:studio": "npx prisma studio",
+    "db:push": "npx prisma db push"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
