@@ -33,7 +33,7 @@ const serviceAccents = [
 
 export function Services() {
   return (
-    <section id="services" className="relative py-16 sm:py-24 lg:py-32">
+    <section id="services" className="relative py-16 sm:py-24 lg:py-32 overflow-hidden">
       {/* Background Ambient Glow */}
       <div className="pointer-events-none absolute right-10 top-1/3 -z-10 h-96 w-96 rounded-full bg-emerald-500/10 blur-[140px]" />
 

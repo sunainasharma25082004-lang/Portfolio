@@ -51,7 +51,7 @@ export default function Page() {
       <ScrollProgress />
       <Navbar onOpenCommandPalette={() => setIsCommandPaletteOpen(true)} />
 
-      <main className="relative z-10">
+      <main className="relative z-10 overflow-x-hidden w-full max-w-full">
         <Hero
           onOpenResume={() => setIsResumeModalOpen(true)}
           onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}

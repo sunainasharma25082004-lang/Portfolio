@@ -120,7 +120,7 @@ export function Contact() {
     'w-full rounded-2xl border border-indigo-500/30 bg-slate-950/80 px-4 py-3 text-sm text-white placeholder:text-slate-500 transition-all focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/30 font-medium'
 
   return (
-    <section id="contact" className="relative py-16 sm:py-24 lg:py-32">
+    <section id="contact" className="relative py-16 sm:py-24 lg:py-32 overflow-hidden">
       {/* Background Ambient Glow */}
       <div className="pointer-events-none absolute right-1/4 bottom-10 -z-10 h-96 w-96 rounded-full bg-emerald-500/10 blur-[140px]" />
 

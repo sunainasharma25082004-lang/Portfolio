@@ -64,7 +64,7 @@ export function Skills() {
   return (
     <section
       id="skills"
-      className="relative py-16 sm:py-24 lg:py-32"
+      className="relative py-16 sm:py-24 lg:py-32 overflow-hidden"
     >
       {/* Ambient background glows */}
       <div className="pointer-events-none absolute left-1/4 bottom-10 -z-10 h-80 w-80 rounded-full bg-cyan-500/10 blur-[130px]" />

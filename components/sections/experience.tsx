@@ -8,7 +8,7 @@ import { timeline } from '@/lib/data'
 
 export function Experience() {
   return (
-    <section id="experience" className="relative py-16 sm:py-24 lg:py-32">
+    <section id="experience" className="relative py-16 sm:py-24 lg:py-32 overflow-hidden">
       {/* Background Ambient Glow */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/10 blur-[150px]" />
 

@@ -64,7 +64,7 @@ const highlights = [
 
 export function About() {
   return (
-    <section id="about" className="relative py-16 sm:py-24 lg:py-32">
+    <section id="about" className="relative py-16 sm:py-24 lg:py-32 overflow-hidden">
       {/* Background Subtle Mesh */}
       <div className="pointer-events-none absolute right-0 top-1/2 -z-10 h-96 w-96 -translate-y-1/2 rounded-full bg-indigo-500/10 blur-[130px]" />
 
