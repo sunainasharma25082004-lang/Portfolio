@@ -2,6 +2,10 @@
   "version": 2,
   "projects": [
     {
+      "name": "backend",
+      "directory": "backend"
+    },
+    {
       "name": "Portfolio",
       "directory": "."
     }
