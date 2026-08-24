@@ -8,7 +8,7 @@ export const personal = {
   whatsappNumber: '916284961684',
   whatsapp: 'https://wa.me/916284961684',
   location: 'Chandigarh / Zirakpur, India',
-  linkedin: 'https://linkedin.com',
+  linkedin: 'https://www.linkedin.com/in/sunaina-sharma-294335370',
   github: 'https://github.com/sunainasharma25082004-lang',
   twitter: 'https://twitter.com',
 }
