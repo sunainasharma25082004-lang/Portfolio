@@ -225,7 +225,7 @@ export function Hero({ onOpenResume, onOpenCommandPalette }: HeroProps) {
             <motion.div
               animate={{ y: [0, -4, 0] }}
               transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
-              className="absolute -top-2 -left-2 sm:-top-3 sm:-left-3 rounded-xl sm:rounded-2xl border border-emerald-500/50 bg-slate-950/90 p-2 sm:p-3 text-emerald-400 shadow-xl backdrop-blur-xl scale-90 sm:scale-100"
+              className="absolute -top-2 -left-1 sm:-top-3 sm:-left-3 rounded-xl sm:rounded-2xl border border-emerald-500/50 bg-slate-950/90 p-1.5 sm:p-3 text-emerald-400 shadow-xl backdrop-blur-xl scale-75 xs:scale-90 sm:scale-100"
               title="React & React Native"
             >
               <SiReact size={18} className="sm:size-6" />
@@ -234,7 +234,7 @@ export function Hero({ onOpenResume, onOpenCommandPalette }: HeroProps) {
             <motion.div
               animate={{ y: [0, 4, 0] }}
               transition={{ repeat: Infinity, duration: 4.5, ease: 'easeInOut', delay: 0.4 }}
-              className="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 rounded-xl sm:rounded-2xl border border-indigo-500/50 bg-slate-950/90 p-2 sm:p-3 text-white shadow-xl backdrop-blur-xl scale-90 sm:scale-100"
+              className="absolute -top-2 -right-1 sm:-top-3 sm:-right-3 rounded-xl sm:rounded-2xl border border-indigo-500/50 bg-slate-950/90 p-1.5 sm:p-3 text-white shadow-xl backdrop-blur-xl scale-75 xs:scale-90 sm:scale-100"
               title="Next.js"
             >
               <SiNextdotjs size={18} className="sm:size-6" />
@@ -243,7 +243,7 @@ export function Hero({ onOpenResume, onOpenCommandPalette }: HeroProps) {
             <motion.div
               animate={{ y: [0, -4, 0] }}
               transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut', delay: 0.8 }}
-              className="absolute -bottom-2 -right-2 sm:-bottom-3 sm:-right-3 rounded-xl sm:rounded-2xl border border-purple-500/50 bg-slate-950/90 p-2 sm:p-3 text-purple-400 shadow-xl backdrop-blur-xl scale-90 sm:scale-100"
+              className="absolute -bottom-2 -right-1 sm:-bottom-3 sm:-right-3 rounded-xl sm:rounded-2xl border border-purple-500/50 bg-slate-950/90 p-1.5 sm:p-3 text-purple-400 shadow-xl backdrop-blur-xl scale-75 xs:scale-90 sm:scale-100"
               title="TypeScript"
             >
               <SiTypescript size={18} className="sm:size-6" />
@@ -252,7 +252,7 @@ export function Hero({ onOpenResume, onOpenCommandPalette }: HeroProps) {
             <motion.div
               animate={{ y: [0, 4, 0] }}
               transition={{ repeat: Infinity, duration: 4.2, ease: 'easeInOut', delay: 1.2 }}
-              className="absolute bottom-12 -left-3 sm:bottom-16 sm:-left-4 rounded-xl sm:rounded-2xl border border-cyan-500/50 bg-slate-950/90 p-2 sm:p-3 text-cyan-400 shadow-xl backdrop-blur-xl scale-90 sm:scale-100"
+              className="absolute bottom-12 -left-1 sm:bottom-16 sm:-left-4 rounded-xl sm:rounded-2xl border border-cyan-500/50 bg-slate-950/90 p-1.5 sm:p-3 text-cyan-400 shadow-xl backdrop-blur-xl scale-75 xs:scale-90 sm:scale-100"
               title="Node.js & MongoDB"
             >
               <SiNodedotjs size={18} className="sm:size-6" />
@@ -263,13 +263,13 @@ export function Hero({ onOpenResume, onOpenCommandPalette }: HeroProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
-              className="absolute -bottom-3 left-2 sm:left-4 rounded-xl border border-emerald-500/40 glass px-3 py-1.5 sm:px-5 sm:py-2.5 shadow-xl"
+              className="absolute -bottom-3 left-1 sm:left-4 rounded-xl border border-emerald-500/40 glass px-2.5 py-1.5 sm:px-5 sm:py-2.5 shadow-xl scale-90 sm:scale-100"
             >
-              <p className="font-heading text-sm font-black text-emerald-400 sm:text-2xl leading-none">
+              <p className="font-heading text-xs font-black text-emerald-400 sm:text-2xl leading-none">
                 1+ Year
               </p>
               <p className="text-[8px] font-bold uppercase tracking-wider text-slate-300 mt-0.5 sm:text-[11px]">
-                Industry Experience
+                Industry Exp
               </p>
             </motion.div>
 
@@ -278,9 +278,9 @@ export function Hero({ onOpenResume, onOpenCommandPalette }: HeroProps) {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.65 }}
-              className="absolute -right-2 top-10 sm:-right-4 sm:top-14 rounded-xl border border-indigo-500/40 glass px-3 py-1.5 sm:px-5 sm:py-2.5 shadow-xl"
+              className="absolute -right-1 top-8 sm:-right-4 sm:top-14 rounded-xl border border-indigo-500/40 glass px-2.5 py-1.5 sm:px-5 sm:py-2.5 shadow-xl scale-90 sm:scale-100"
             >
-              <p className="font-heading text-sm font-black gradient-text sm:text-2xl leading-none">
+              <p className="font-heading text-xs font-black gradient-text sm:text-2xl leading-none">
                 20+ Apps
               </p>
               <p className="text-[8px] font-bold uppercase tracking-wider text-slate-300 mt-0.5 sm:text-[11px]">
