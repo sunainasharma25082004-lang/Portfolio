@@ -253,6 +253,61 @@ export const projects: Project[] = [
     ],
   },
   {
+    id: 'raydo-cab-booking-app',
+    title: 'Raydo — On-Demand Cab & Ride Hailing Mobile App',
+    category: 'Mobile App',
+    description:
+      'Uber-style on-demand cab and ride-hailing mobile application. Engineered end-to-end with React Native, Node.js REST APIs, Express, and MongoDB. Features real-time GPS driver tracking, dynamic route mapping via Google Maps API, fare estimation, multiple vehicle classes (Economy, Comfort, Auto, Bike), driver dispatch engine, and instant ride receipts.',
+    image: '/projects/raydo.jpg',
+    screenshots: [
+      '/projects/raydo.jpg',
+    ],
+    tech: [
+      'React Native',
+      'Expo',
+      'Google Maps API',
+      'Node.js REST API',
+      'Express.js',
+      'MongoDB',
+      'Socket.io',
+    ],
+    demo: 'https://github.com/sunainasharma25082004-lang',
+    github: 'https://github.com/sunainasharma25082004-lang',
+    highlights: [
+      'Uber-Style Real-Time Cab Booking & Driver Match',
+      'Live GPS Driver Tracking & Google Maps Route SDK',
+      'Fare Calculation & Multi-Vehicle Categories',
+      'A-to-Z Mobile UI & Express Socket Backend',
+    ],
+  },
+  {
+    id: 'dmt-home-services-app',
+    title: 'DMT — On-Demand Home Services & Repair Platform',
+    category: 'Mobile App',
+    description:
+      'Urban Company (UrbanClap) style on-demand local home services and repair booking app. Connects homeowners with verified service professionals for plumbing, electrical work, home cleaning, appliance repair, and beauty/salon services. Includes slot scheduling, upfront transparent pricing, live professional dispatch tracking, and user review ratings.',
+    image: '/projects/dmt.jpg',
+    screenshots: [
+      '/projects/dmt.jpg',
+    ],
+    tech: [
+      'React Native',
+      'React.js',
+      'Node.js REST API',
+      'Express.js',
+      'MongoDB & Mongoose',
+      'JWT Auth',
+    ],
+    demo: 'https://github.com/sunainasharma25082004-lang',
+    github: 'https://github.com/sunainasharma25082004-lang',
+    highlights: [
+      'Urban Company Style Multi-Service Booking UI',
+      'Verified Professional Dispatch & Slot Scheduler',
+      'Upfront Transparent Pricing & Order Cart',
+      'Real-Time Service Tracking & Rating System',
+    ],
+  },
+  {
     id: 'real-estate-platform',
     title: 'Real Estate Property Listing & Filter Platform',
     category: 'Frontend',
