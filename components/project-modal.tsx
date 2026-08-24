@@ -37,7 +37,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
 
   if (!project) return null
 
-  const isVideo = (url?: string) => url?.endsWith('.mp4')
+  const isVideo = (url?: string) => Boolean(url && url.toLowerCase().includes('.mp4'))
 
   return (
     <AnimatePresence>
@@ -110,6 +110,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 <div className="relative overflow-hidden rounded-2xl border border-border bg-card/60 shadow-lg">
                   {project.videoDemo && isVideo(project.videoDemo) ? (
                     <video
+                      key={project.id}
                       src={project.videoDemo}
                       controls
                       autoPlay

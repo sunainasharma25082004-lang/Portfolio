@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -45,6 +45,8 @@ export function Projects() {
   const [activeImageIndex, setActiveImageIndex] = useState<number>(0)
   const [zoomImage, setZoomImage] = useState<string | null>(null)
 
+  const videoRef = useRef<HTMLVideoElement>(null)
+
   const featuredProjects = projects
 
   const filteredProjects = projects.filter((p) => {
@@ -53,6 +55,16 @@ export function Projects() {
   })
 
   const currentFeatured = featuredProjects[activeFeaturedIndex] || featuredProjects[0]
+
+  useEffect(() => {
+    if (videoRef.current) {
+      if (isPlayingVideo) {
+        videoRef.current.play().catch(() => {})
+      } else {
+        videoRef.current.pause()
+      }
+    }
+  }, [isPlayingVideo, activeFeaturedIndex])
 
   const openDetails = (project: Project) => {
     setDetailProject(project)
@@ -337,6 +349,8 @@ export function Projects() {
                           {/* Phone Screen Display with Live Video */}
                           <div className="relative aspect-[9/18] w-full overflow-hidden rounded-[28px] bg-black">
                             <video
+                              key={currentFeatured.id}
+                              ref={videoRef}
                               src={currentFeatured.videoDemo}
                               autoPlay={isPlayingVideo}
                               loop
@@ -482,12 +496,19 @@ export function Projects() {
                   >
                     <Image
                       src={project.image}
-                      alt={`${project.title} screenshot`}
+                          alt={`${project.title} screenshot`}
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-card via-card/10 to-transparent opacity-90" />
+
+                    {/* Video Demo Badge if available */}
+                    {project.videoDemo && (
+                      <span className="absolute top-2.5 left-2.5 rounded-full bg-secondary/20 border border-secondary/40 px-2.5 py-0.5 text-[9px] font-bold text-secondary backdrop-blur-md flex items-center gap-1">
+                        🎬 Video Demo
+                      </span>
+                    )}
 
                     {/* Live Badge if production */}
                     {project.demo.includes('http') && (
@@ -498,6 +519,17 @@ export function Projects() {
 
                     {/* Hover Quick Action */}
                     <div className="absolute inset-0 flex items-center justify-center gap-2 bg-black/65 opacity-0 backdrop-blur-sm transition-opacity duration-300 group-hover:opacity-100">
+                      {project.videoDemo && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            setActiveVideoModal(project)
+                          }}
+                          className="inline-flex items-center gap-1.5 rounded-full bg-secondary px-3.5 py-1.5 text-xs font-extrabold text-secondary-foreground shadow-md transition-transform hover:scale-105"
+                        >
+                          <FiPlay size={13} /> Watch Video
+                        </button>
+                      )}
                       <button
                         onClick={(e) => {
                           e.stopPropagation()
