@@ -1,4 +1,9 @@
 {
-  "buildCommand": "npx prisma generate && next build",
-  "framework": "nextjs"
+  "version": 2,
+  "projects": [
+    {
+      "name": "Portfolio",
+      "directory": "."
+    }
+  ]
 }
